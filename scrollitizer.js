@@ -1,29 +1,52 @@
 var last_known_scroll_position = 0;
 var ticking = false;
-handleScroll.lastScroll = 0;
+handleScroll.vLastScroll = 0;
+handleScroll.hLastScroll = 0;
 
-function fetch(id){
-  return document.getElementById(id);
+function getUnit(str){
+  return str.charAt(str.length-1) == "%" ? str.charAt(str.length-1) : str.substr(str.length-2, str.length-1);
 }
 
-function handleScroll(scrollPos) {
-  let scrollPct = scrollPos/(document.body.scrollHeight-window.innerHeight);
-  let vertParallax = document.querySelectorAll('[vertParallax]');
-  let horParallax  = document.querySelectorAll('[horParallax]');
+function vPar(elements, deltaScroll){
   elements.forEach(elem=>{
-    let deltaScroll = scrollPos - handleScroll.lastScroll;
     let vertParallax = elem.getAttribute('vertParallax').split(" ");
-    if(vertParallax[0]) elem.style.top = (elem.style.top.substring(0, elem.style.top.length-2)-(deltaScroll*vertParallax[0]))+'vh';
-    if(vertParallax[1]) elem.style.left = (elem.style.left.substring(0, elem.style.left.length-2)-(deltaScroll*vertParallax[1]))+'vw';
+    let l = elem.style.left;
+    let t = elem.style.top;
+    let lUnit = getUnit(l);
+    let tUnit = getUnit(t);
+    if(vertParallax[0]) elem.style.top = (t.substring(0, t.length-2)-(deltaScroll*vertParallax[0]))+tUnit;
+    if(vertParallax[1]) elem.style.left = (l.substring(0, l.length-2)-(deltaScroll*vertParallax[1]))+lUnit;
   });
-  handleScroll.lastScroll = scrollPos;
+}
+
+function hPar(elements, deltaScroll){
+  elements.forEach(elem=>{
+    let horParallax = elem.getAttribute('horParallax').split(" ");
+    let l = elem.style.left;
+    let t = elem.style.top;
+    let lUnit = getUnit(l);
+    let tUnit = getUnit(t);
+    if(horParallax[0]) elem.style.left = (l.substring(0, l.length-2)-(deltaScroll*horParallax[0]))+lUnit;
+    if(horParallax[1]) elem.style.top = (t.substring(0, t.length-2)-(deltaScroll*horParallax[1]))+tUnit;
+  });
+}
+
+function handleScroll(vScrollPos, hScrollPos) {
+  // let vscrollPct = scrollPos/(document.body.scrollHeight-window.innerHeight);
+  let vDeltaScroll = vScrollPos - handleScroll.vLastScroll;
+  let hDeltaScroll = hScrollPos - handleScroll.hLastScroll;
+  if(vDeltaScroll) vPar(document.querySelectorAll('[vertParallax]'), vDeltaScroll);
+  if(hDeltaScroll) hPar(document.querySelectorAll('[horParallax]'), hDeltaScroll);
+  handleScroll.vLastScroll = vScrollPos;
+  handleScroll.hLastScroll = hScrollPos;
 }
 
 window.addEventListener('scroll', function(e) {
-  last_known_scroll_position = window.scrollY;
+  vLastScroll = e.currentTarget.scrollY;
+  hLastScroll = e.currentTarget.scrollX;
   if (!ticking) {
     window.requestAnimationFrame(function() {
-      handleScroll(last_known_scroll_position);
+      handleScroll(vLastScroll, hLastScroll);
       ticking = false;
     });
   }
