@@ -1,0 +1,25 @@
+body{
+  background: #aac;
+}
+
+#titleBox{
+  position: fixed;
+  left: 1vw;
+  top: 30vh;
+  font-size: 18vw;
+  font-family: 'Montserrat', sans-serif;
+  width: 98vw;
+  height: 40vh;
+  background: yellow;
+  overflow: hidden;
+}
+#titleScroll{
+  position: relative;;
+}
+#titleItizer{
+  position: relative;
+}
+
+#spacer{
+  height:500vh;
+}
