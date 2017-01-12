@@ -2,6 +2,8 @@ var last_known_scroll_position = 0;
 var ticking = false;
 var vhPerPx = 100/window.innerHeight;
 var vwPerPx = 100/window.innerWidth;
+var hParElements = [];
+var vParElements = [];
 handleScroll.vLastScroll = 0;
 handleScroll.hLastScroll = 0;
 
@@ -11,55 +13,41 @@ function getUnit(str){
 
 function vPar(elements, pxDeltaScroll){
   elements.forEach(elem=>{
+    let style = window.getComputedStyle(elem);
+    if (elem.style.top == "" || elem.style.left == ""){
+      elem.style.top = style.getPropertyValue("top");
+      elem.style.left = style.getPropertyValue("left");
+    }
     let vertParallax = elem.getAttribute('vPar').split(" ");
-    let vhDeltaScroll = pxDeltaScroll * vhPerPx;
-    let vwDeltaScroll = pxDeltaScroll * vwPerPx;
     let l = elem.style.left;
     let t = elem.style.top;
     let lUnit = getUnit(l);
     let tUnit = getUnit(t);
     if (vertParallax[0]){
-      if (tUnit == "vh" || tUnit == "%")
-        elem.style.top = (t.substring(0, t.length-2)-(vhDeltaScroll*vertParallax[0]))+tUnit;
-      else if (tUnit == "vw")
-        elem.style.top = (t.substring(0, t.length-2)-(vwDeltaScroll*vertParallax[0]))+tUnit;
-      else
-        elem.style.top = (t.substring(0, t.length-2)-(pxDeltaScroll*vertParallax[0]))+tUnit;
+      elem.style.top = (t.substring(0, t.length-2)-(pxDeltaScroll*vertParallax[0]))+tUnit;
     }
     if(vertParallax[1]){
-      if (lUnit == "vw" || lUnit == "%")
-        elem.style.left = (l.substring(0, l.length-2)-(vwDeltaScroll*vertParallax[1]))+lUnit;
-      else if (lUnit == "vh")
-        elem.style.left = (l.substring(0, l.length-2)-(vhDeltaScroll*vertParallax[1]))+lUnit;
-      else
-        elem.style.left = (l.substring(0, l.length-2)-(pxDeltaScroll*vertParallax[1]))+lUnit;
+      elem.style.left = (l.substring(0, l.length-2)-(pxDeltaScroll*vertParallax[1]))+lUnit;
     }
   });
 }
 
 function hPar(elements, pxDeltaScroll){
   elements.forEach(elem=>{
+    let style = window.getComputedStyle(elem);
+    if (elem.style.top == "" || elem.style.left == ""){
+      elem.style.top = style.getPropertyValue("top");
+      elem.style.left = style.getPropertyValue("left");
+    }
     let horParallax = elem.getAttribute('hPar').split(" ");
-    let vhDeltaScroll = pxDeltaScroll * vhPerPx;
-    let vwDeltaScroll = pxDeltaScroll * vwPerPx;
     let l = elem.style.left;
     let t = elem.style.top;
     let lUnit = getUnit(l);
     let tUnit = getUnit(t);
     if(horParallax[0]){
-      if (lUnit == "vw" || lUnit == "%")
-        elem.style.left = (l.substring(0, l.length-2)-(vwDeltaScroll*horParallax[0]))+lUnit;
-      else if (lUnit == "vh")
-        elem.style.left = (l.substring(0, l.length-2)-(vhDeltaScroll*horParallax[0]))+lUnit;
-      else
         elem.style.left = (l.substring(0, l.length-2)-(pxDeltaScroll*horParallax[0]))+lUnit;
     }
     if(horParallax[1]){
-      if (tUnit == "vh" || tUnit == "%")
-        elem.style.top = (t.substring(0, t.length-2)-(vhDeltaScroll*horParallax[1]))+tUnit;
-      else if (tUnit == "vw")
-        elem.style.top = (t.substring(0, t.length-2)-(vwDeltaScroll*horParallax[1]))+tUnit;
-      else
         elem.style.top = (t.substring(0, t.length-2)-(pxDeltaScroll*horParallax[1]))+tUnit;
     }
   });

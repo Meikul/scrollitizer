@@ -6,18 +6,23 @@ body{
   position: fixed;
   left: 1vw;
   top: 30vh;
-  font-size: 18vw;
+  font-size: 32.6vh;
   font-family: 'Montserrat', sans-serif;
   width: 98vw;
   height: 40vh;
   background: yellow;
+  text-align: center;
   overflow: hidden;
 }
 #titleScroll{
-  position: relative;;
+  position: relative;
+  top: 0px;
+  left: 0px;
 }
 #titleItizer{
   position: relative;
+  top: 0px;
+  left: 0px;
 }
 
 #spacer{
