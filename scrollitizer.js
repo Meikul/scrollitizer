@@ -66,7 +66,6 @@ function handleScroll(vScrollPos, hScrollPos) {
 window.addEventListener('scroll', function(e) {
   vLastScroll = e.currentTarget.scrollY;
   hLastScroll = e.currentTarget.scrollX;
-
   if (!ticking) {
     window.requestAnimationFrame(function() {
       handleScroll(vLastScroll, hLastScroll);

@@ -13,6 +13,10 @@ It's just a script file so download the file, put it in your project folder and 
 Scrollitizer uses html attributes to determine what you want your DOM elements to do when you scroll.
 ### Parallax
 Parallax is the effect you get when you move and closer objects seem to move faster than further objects. There's a similar effect used in web development. It's a good way to make your website more visually engaging. Scrollitizer makes parallax effects easy.
+
+##### Requirements
+* Elements you want to use parallax with must have position other than static which is default.
+
 #### Vertical Parallax
 Vertical parallax is a parallax effect that takes place when you scroll up or down. To use it in your project just include the "vPar" attribute in your html tag to give parallax powers when you scroll vertically. <br/><br/>
 The syntax of the vPar attribute is as follows: <br/>

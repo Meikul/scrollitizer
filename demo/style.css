@@ -2,7 +2,12 @@ body{
   background: #aac;
 }
 
+span{
+  position: relative;
+}
+
 #titleBox{
+  --vPar: 4;
   position: fixed;
   left: 1vw;
   top: 30vh;
@@ -10,11 +15,11 @@ body{
   font-family: 'Montserrat', sans-serif;
   width: 98vw;
   height: 40vh;
-  background: yellow;
+  background: #ff0;
   text-align: center;
   overflow: hidden;
 }
-#titleScroll{
+/*#titleScroll{
   position: relative;
   top: 0px;
   left: 0px;
@@ -23,7 +28,7 @@ body{
   position: relative;
   top: 0px;
   left: 0px;
-}
+}*/
 
 #spacer{
   height:500vh;
