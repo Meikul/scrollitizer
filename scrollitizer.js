@@ -11,8 +11,13 @@ function getUnit(str){
   return str.charAt(str.length-1) == "%" ? str.charAt(str.length-1) : str.substr(str.length-2, str.length-1);
 }
 
-function vPar(elements, pxDeltaScroll){
-  elements.forEach(elem=>{
+window.onload = ()=>{
+  vParElements = document.querySelectorAll('[vPar]');
+  hParElements = document.querySelectorAll('[hPar]');
+};
+
+function vPar(pxDeltaScroll){
+  vParElements.forEach(elem=>{
     let style = window.getComputedStyle(elem);
     if (elem.style.top == "" || elem.style.left == ""){
       elem.style.top = style.getPropertyValue("top");
@@ -32,8 +37,8 @@ function vPar(elements, pxDeltaScroll){
   });
 }
 
-function hPar(elements, pxDeltaScroll){
-  elements.forEach(elem=>{
+function hPar(pxDeltaScroll){
+  hParElements.forEach(elem=>{
     let style = window.getComputedStyle(elem);
     if (elem.style.top == "" || elem.style.left == ""){
       elem.style.top = style.getPropertyValue("top");
@@ -57,8 +62,8 @@ function handleScroll(vScrollPos, hScrollPos) {
   // let vscrollPct = scrollPos/(document.body.scrollHeight-window.innerHeight);
   let vDeltaScroll = vScrollPos - handleScroll.vLastScroll;
   let hDeltaScroll = hScrollPos - handleScroll.hLastScroll;
-  if(vDeltaScroll) vPar(document.querySelectorAll('[vPar]'), vDeltaScroll);
-  if(hDeltaScroll) hPar(document.querySelectorAll('[hPar]'), hDeltaScroll);
+  if(vDeltaScroll) vPar(vDeltaScroll);
+  if(hDeltaScroll) hPar(hDeltaScroll);
   handleScroll.vLastScroll = vScrollPos;
   handleScroll.hLastScroll = hScrollPos;
 }
