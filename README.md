@@ -9,7 +9,7 @@ Small script that makes scrolling more interesting.
 It's just a script file with no dependencies, so kinda however you want. You can just download it, put it in your project folder and include it via a script tag in any html you use it in.<br/>
 `<script src=".js"></script>`
 <br/>
-It's also probably a good idea to put it above any of your script tags. The [update](#update) functions won't work otherwise. Everything else will work wherever you put it.
+It's also probably a good idea to put it above any of your script tags. The [update](#updating-scrollitizers-dom) functions won't work otherwise. Everything else will work wherever you put it.
 
 ## Documentation
 Scrollitizer uses html attributes to determine what you want your DOM elements to do when you scroll.
@@ -38,7 +38,7 @@ Horizontal Parallax is essentially the same as vertical parallax, except the eff
 The syntax is as follows:<br/>
 `hPar="[horizontal scroll speed] [vertical scroll speed]"`
 
-### <span id="update">Updating Scrollitizer's DOM</span>
+### Updating Scrollitizer's DOM
 Scrollitizer finds all elements with vPar or hPar attributes when the page initially loads and doesn't look again. If you create elements any time after the page loads Scrollitizer doesn't know they exist. Use the update functions to make Scrollitizer find them. Just put them in your JS files when you want to update Scrollitizer.<br/>
 &nbsp;&nbsp; `updateScrollitizer()` makes Scrollitizer look again for elements with vPar and hPar attributes<br/>
 &nbsp;&nbsp; `updatevPar()` just looks for elements with the vPar attribute<br/>
