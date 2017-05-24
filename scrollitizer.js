@@ -7,14 +7,24 @@ var vParElements = [];
 handleScroll.vLastScroll = 0;
 handleScroll.hLastScroll = 0;
 
+function updateScrollitizer(){
+  vParElements = document.querySelectorAll('[vPar]');
+  hParElements = document.querySelectorAll('[hPar]');
+}
+
+function updatevPar(){
+  vParElements = document.querySelectorAll('[vPar]');
+}
+
+function updatehPar(){
+  hParElements = document.querySelectorAll('[hPar]');
+}
+
 function getUnit(str){
   return str.charAt(str.length-1) == "%" ? str.charAt(str.length-1) : str.substr(str.length-2, str.length-1);
 }
 
-window.onload = ()=>{
-  vParElements = document.querySelectorAll('[vPar]');
-  hParElements = document.querySelectorAll('[hPar]');
-};
+window.onload = updateScrollitizer;
 
 function vPar(pxDeltaScroll){
   vParElements.forEach(elem=>{
