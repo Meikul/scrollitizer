@@ -39,7 +39,20 @@ The syntax is as follows:<br/>
 `hPar="[horizontal scroll speed] [vertical scroll speed]"`
 
 ### Updating Scrollitizer's DOM
-Scrollitizer finds all elements with vPar or hPar attributes when the page initially loads and doesn't look again. If you create elements any time after the page loads Scrollitizer doesn't know they exist. Use the update functions to make Scrollitizer find them. Just put them in your JS files when you want to update Scrollitizer.<br/>
-&nbsp;&nbsp; `updateScrollitizer()` makes Scrollitizer look again for elements with vPar and hPar attributes<br/>
-&nbsp;&nbsp; `updatevPar()` just looks for elements with the vPar attribute<br/>
-&nbsp;&nbsp; `updatehPar()` just looks for elements with the hPar attribute
+Scrollitizer finds all elements with vPar or hPar attributes when the page initially loads and doesn't look again. If you create elements any time after the page loads Scrollitizer doesn't know they exist. Use the update functions to make Scrollitizer find them.<br/>
+&nbsp;&nbsp; `updatevPar()` looks for elements with the vPar attribute<br/>
+&nbsp;&nbsp; `updatehPar()` looks for elements with the hPar attribute<br/>
+&nbsp;&nbsp; `updateScrollitizer()` looks for both<br/>
+Just put these functions in your JS files when you want to update Scrollitizer.
+For example:<br/>
+```js
+var element = document.createElement('div');
+element.setAttribute('vPar', '1.0');
+body.appendChild(document.createElement('div'));
+// We just created a div with a vPar attribute and stuck it in "body", but Scrollitizer
+// doesn't know that. We have to update it.
+updateScrollitizer();
+// We could also do this
+updatevPar();
+// since what we added only had a vPar attribute.
+```
