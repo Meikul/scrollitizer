@@ -23,9 +23,119 @@ window.addEventListener('load', function(){ // set total scrollable height
   )-window.innerWidth;
 });
 
-function updateScrollitizer(){
-  vParElements = document.querySelectorAll('[vPar]');
-  hParElements = document.querySelectorAll('[hPar]');
+function ParElemParser(par){
+  pack = {};
+  pack.forEach((str, i)=>{
+    if(i===0){
+      pack.prim = parseFloat(str);
+    }
+    else{
+      if(str.match(/->/)){ // Bounds (assuming lone start bound has ->)
+        hasBounds = true;
+        pack.bounds.start = str.match(/.+?(?=->)/) ? str.match(/.+?(?=->)/)[0] : "0px";
+        pack.bounds.end = str.match(/->(.+)$/) ? str.match(/->(.+)$/)[1] : "100%";
+      }
+      else{ // horizontal move
+        pack.sec = parseFloat(str);
+        elem.style.left = (l.substring(0, l.length-2)-(pxDeltaScroll*arg))+lUnit;
+      }
+    }
+  });
+}
+
+function ParElem(elem){
+  this.elem = elem;
+  let vPar = elem.getAttribute('vPar').split(" ");
+  let hPar = elem.getAttribute('hPar').split(" ");
+  vPar.forEach();
+}
+
+function isElement(obj) {
+  try {
+    return obj instanceof HTMLElement;
+  }
+  catch(e){
+    return (typeof obj==="object") &&
+      (obj.nodeType===1) && (typeof obj.style === "object") &&
+      (typeof obj.ownerDocument ==="object");
+  }
+}
+
+function updateScrollitizer(arg='all'){
+  if(typeof arg === 'string'){
+    if(arg === 'vertical'){
+      vParElements = [];
+      document.querySelectorAll('[vPar]').forEach((node)=>{
+        vParElements.push(ParElem(node));
+      });
+    }
+    else if(arg === 'horizontal'){
+      hParElements = [];
+      document.querySelectorAll('[hPar]').forEach((node)=>{
+        hParElements.push(ParElem(node));
+      });
+    }
+    else if(arg === 'all'){
+      vParElements = [];
+      document.querySelectorAll('[vPar]').forEach((node)=>{
+        vParElements.push(ParElem(node));
+      });
+      hParElements = [];
+      document.querySelectorAll('[hPar]').forEach((node)=>{
+        hParElements.push(ParElem(node));
+      });
+    }
+  }
+  else if(typeof arg === 'object'){
+    if(isElement(arg)){
+      if(arg.getAttribute('vPar')){
+        let i=0;
+        for(let vParElem of vParElements){
+          i++;
+          if(vParElem.elem === arg){
+            vParElements[i] = ParElem(arg);
+            break;
+          }
+        }
+      }
+      if(arg.getAttribute('hPar')){
+        let i=0;
+        for(let hParElem of hParElements){
+          i++;
+          if(hParElem.elem === arg){
+            hParElements[i] = ParElem(arg);
+            break;
+          }
+        }
+      }
+    }
+    else if(Array.isArray(arg)){
+      arg.forEach((ArrElem)=>{
+        if(isElement(ArrElem)){
+          if(arg.getAttribute('vPar')){
+            let i=0;
+            for(let vParElem of vParElements){
+              i++;
+              if(vParElem.elem === arg){
+                vParElements[i] = ParElem(arg);
+                break;
+              }
+            }
+          }
+          if(arg.getAttribute('hPar')){
+            let i=0;
+            for(let hParElem of hParElements){
+              i++;
+              if(hParElem.elem === arg){
+                hParElements[i] = ParElem(arg);
+                break;
+              }
+            }
+          }
+        }
+      });
+    }
+  }
 }
 
 function updatevPar(){
@@ -102,8 +212,6 @@ function hinBounds(start, end){
 
 }
 
-window.onload = updateScrollitizer;
-
 function vPar(pxDeltaScroll){
   vParElements.forEach(elem=>{
     if (elem.style.top == "" || elem.style.left == ""){
@@ -175,6 +283,9 @@ function hPar(pxDeltaScroll){
     }
   });
 }
+
+
+window.onload = updateScrollitizer;
 
 function handleScroll(vScrollPos, hScrollPos) {
   let vDeltaScroll = vScrollPos - handleScroll.vLastScroll;
